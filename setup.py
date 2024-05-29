@@ -13,7 +13,7 @@ setup(
     license="MIT License",
     author="Anders Hoff",
     author_email="inconvergent@gmail.com",
-    install_requires=["docopt", "svgwrite", "numpy", "scipy"],
+    install_requires=["docopt-ng", "svgwrite", "numpy", "scipy"],
     packages=find_packages(),
     entry_points={"console_scripts": ["svgsort=svgsort:main"]},
     zip_safe=True,
