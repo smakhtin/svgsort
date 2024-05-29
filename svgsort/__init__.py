@@ -58,7 +58,7 @@ Examples:
 """
 
 
-__ALL__ = ['Svgsort']
+__ALL__ = ["Svgsort"]
 
 import sys
 import traceback
@@ -70,56 +70,58 @@ from .paper_utils import PAPER
 from .paper_utils import make_paper
 
 
-
 def main():
-  args = docopt(__doc__, version='svgsort 3.0.0')
-  try:
-    _in = args['<in>']
-    out = args['<out>'] if args['<out>'] else args['<in>']+'-srt'
-    adjust = not args['--no-adjust']
-    penmoves = args['--pen-moves']
+    args = docopt(__doc__, version="svgsort 3.0.0")
+    try:
+        _in = args["<in>"]
+        out = args["<out>"] if args["<out>"] else args["<in>"] + "-srt"
+        adjust = not args["--no-adjust"]
+        penmoves = args["--pen-moves"]
 
-    svgs = Svgsort(sw=args['--sw']).load(_in)
+        svgs = Svgsort(sw=args["--sw"]).load(_in)
 
-    if args['--no-split']:
-      pass
-    elif args['--split-all']:
-      svgs.eager_split()
-    else:
-      # default
-      svgs.split()
+        if args["--no-split"]:
+            pass
+        elif args["--split-all"]:
+            svgs.eager_split()
+        else:
+            # default
+            svgs.split()
 
-    if args['--no-sort']:
-      # do not sort
-      pass
-    else:
-      svgs.sort(rnd=args['--rnd'])
+        if args["--no-sort"]:
+            # do not sort
+            pass
+        else:
+            svgs.sort(rnd=args["--rnd"])
 
-    if args['--repeat']:
-      svgs.repeat()
+        if args["--repeat"]:
+            svgs.repeat()
 
-    if penmoves:
-      svgs.make_pen_move_paths()
+        if penmoves:
+            svgs.make_pen_move_paths()
 
-    dim = args['--dim'].strip().lower()
-    paper = PAPER.get(dim, None)
-    if paper is None:
-      try:
-        paper = make_paper(tuple([int(d) for d in args['--dim'].split('x')]))
-      except Exception:
-        raise ValueError('wrong dim/paper size')
+        dim = args["--dim"].strip().lower()
+        paper = PAPER.get(dim, None)
+        if paper is None:
+            try:
+                paper = make_paper(tuple([int(d) for d in args["--dim"].split("x")]))
+            except Exception:
+                raise ValueError("wrong dim/paper size")
 
-    if adjust:
-      svgs.save(out, paper=paper, pad=float(args['--pad']),
-                padAbs=bool(args['--pad-abs']))
-    else:
-      svgs.save_no_adjust(out)
+        if adjust:
+            svgs.save(
+                out,
+                paper=paper,
+                pad=float(args["--pad"]),
+                padAbs=bool(args["--pad-abs"]),
+            )
+        else:
+            svgs.save_no_adjust(out)
 
-  except Exception:
-    traceback.print_exc(file=sys.stdout)
-    exit(1)
+    except Exception:
+        traceback.print_exc(file=sys.stdout)
+        exit(1)
 
 
-if __name__ == '__main__':
-  main()
-
+if __name__ == "__main__":
+    main()
